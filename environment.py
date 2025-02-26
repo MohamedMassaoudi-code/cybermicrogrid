@@ -17,7 +17,10 @@ class PowerGridEnvironment:
     Attack modes (case-insensitive):
       NONE, FDI, MITM, DOS, REPLAY, DDOS, APT, RANSOMWARE, PHISHING, ZERO_DAY,
       INSIDER, GPS_SPOOF, SUPPLY_CHAIN, CONTROL_HIJACK, CASCADING, SENSOR_JAM,
-      DATA_EXFIL, MALWARE
+      DATA_EXFIL, MALWARE,
+      ISLANDING, LOAD_ALTERING, ENERGY_STORAGE_MANIPULATION, DG_TAMPERING,
+      SYNCHRONIZATION, MARKET_MANIPULATION, FREQUENCY_CONTROL, VOLTAGE_STABILITY,
+      BLACK_START, COORDINATION
     """
     def __init__(self, pp_net, data, attack_mode="none", attack_strength=0.1):
         self.attack_mode = attack_mode.upper()
@@ -66,6 +69,7 @@ class PowerGridEnvironment:
         curr_status = self.pp_net.line.at[line_idx, "in_service"]
         self.pp_net.line.at[line_idx, "in_service"] = not curr_status
 
+        # Existing attack modes (1-18)
         if self.attack_mode in ["DOS", "DDOS"]:
             self.dos_lines = []
             prob = self.attack_strength if self.attack_mode == "DOS" else self.attack_strength * 1.5
@@ -73,7 +77,6 @@ class PowerGridEnvironment:
                 if np.random.rand() < prob:
                     self.pp_net.line.at[i, "in_service"] = False
                     self.dos_lines.append(i)
-
         self._update_graph()
         self._run_power_flow()
 
@@ -193,7 +196,85 @@ class PowerGridEnvironment:
                     self.pp_net.res_bus.at[b, "vm_pu"] += np.random.uniform(-self.attack_strength, self.attack_strength)
                 for idx in self.pp_net.sgen.index:
                     self.pp_net.sgen.at[idx, "p_mw"] *= (1 - self.attack_strength * np.random.uniform(0.5, 1.5))
-        
+            # New Attack Modes (19 - 28)
+            elif self.attack_mode == "ISLANDING":
+                # Simulate islanding by toggling the connection at the Point of Common Coupling (PCC)
+                # Assume PCC is represented by bus index 0.
+                self.attacked_buses = [0]
+                current_status = self.pp_net.bus.at[0, "in_service"] if "in_service" in self.pp_net.bus.columns else True
+                self.pp_net.bus.at[0, "in_service"] = not current_status
+            elif self.attack_mode == "LOAD_ALTERING":
+                # Alter load demands by adding a sinusoidal variation.
+                if len(self.pp_net.load) > 0:
+                    attacked = np.random.choice(self.pp_net.load.index,
+                                                size=int(0.3 * len(self.pp_net.load)),
+                                                replace=False)
+                    for idx in attacked:
+                        original = self.pp_net.load.at[idx, "p_mw"]
+                        delta = self.attack_strength * math.sin(time.time())
+                        self.pp_net.load.at[idx, "p_mw"] = original + delta
+            elif self.attack_mode == "ENERGY_STORAGE_MANIPULATION":
+                # Manipulate energy storage: reduce state-of-charge of batteries (assumed in sgen with 'battery' in name)
+                for idx in self.pp_net.sgen.index:
+                    if "battery" in str(self.pp_net.sgen.at[idx, "name"]).lower():
+                        self.pp_net.sgen.at[idx, "p_mw"] *= (1 - self.attack_strength)
+            elif self.attack_mode == "DG_TAMPERING":
+                # Introduce harmonic distortion to distributed generation
+                for idx in self.pp_net.sgen.index:
+                    original = self.pp_net.sgen.at[idx, "p_mw"]
+                    delta = self.attack_strength * math.sin(2 * time.time())
+                    self.pp_net.sgen.at[idx, "p_mw"] = original * (1 + delta)
+            elif self.attack_mode == "SYNCHRONIZATION":
+                # Manipulate phase measurements to hinder reconnection
+                attacked = np.random.choice(self.pp_net.bus.index,
+                                            size=int(0.3 * len(self.pp_net.bus)),
+                                            replace=False)
+                for b in attacked:
+                    epsilon = self.attack_strength * random.uniform(0.1, 0.5)
+                    # Assume a phase angle attribute "theta" exists; if not, initialize it to 0.0
+                    theta = self.pp_net.bus.at[b, "theta"] if "theta" in self.pp_net.bus.columns else 0.0
+                    self.pp_net.bus.at[b, "theta"] = theta + epsilon
+                    self.attacked_buses.append(b)
+            elif self.attack_mode == "MARKET_MANIPULATION":
+                # Manipulate price signals in transactive energy systems
+                # This is a placeholder: assume a custom attribute 'price' in the network
+                if hasattr(self.pp_net, "price"):
+                    original_price = self.pp_net.price.get("Price_actual", 1.0)
+                    manipulated_price = original_price * (1 + self.attack_strength * random.choice([-1, 1]))
+                    self.pp_net.price["Price_offered"] = manipulated_price
+            elif self.attack_mode == "FREQUENCY_CONTROL":
+                # Manipulate measured frequency to trigger inappropriate droop responses.
+                attacked = np.random.choice(self.pp_net.bus.index,
+                                            size=int(0.3 * len(self.pp_net.bus)),
+                                            replace=False)
+                for b in attacked:
+                    delta_f = self.attack_strength * random.uniform(0.1, 0.5)
+                    # Here we mimic frequency measurement by altering a fictitious 'f_measured' field in res_bus.
+                    self.pp_net.res_bus.at[b, "f_measured"] = 50 + delta_f
+                    self.attacked_buses.append(b)
+            elif self.attack_mode == "VOLTAGE_STABILITY":
+                # Reduce reactive power injection from inverters during critical periods.
+                attacked = np.random.choice(self.pp_net.bus.index,
+                                            size=int(0.2 * len(self.pp_net.bus)),
+                                            replace=False)
+                for b in attacked:
+                    if "q_inj" in self.pp_net.res_bus.columns:
+                        original_q = self.pp_net.res_bus.at[b, "q_inj"]
+                        self.pp_net.res_bus.at[b, "q_inj"] = original_q * (1 - self.attack_strength)
+                    self.attacked_buses.append(b)
+            elif self.attack_mode == "BLACK_START":
+                # Disable black start resources by setting their generation to zero.
+                for idx in self.pp_net.sgen.index:
+                    if "black start" in str(self.pp_net.sgen.at[idx, "name"]).lower():
+                        self.pp_net.sgen.at[idx, "p_mw"] = 0
+            elif self.attack_mode == "COORDINATION":
+                # Introduce variable time delays in communications between distributed resources.
+                delay = self.attack_strength * random.uniform(0.5, 2.0)
+                time.sleep(delay)
+            else:
+                # For attack modes that are not implemented or "NONE"
+                pass
+
         reward = self._calc_reward()
         done = False
         return self.current_data, reward, done
