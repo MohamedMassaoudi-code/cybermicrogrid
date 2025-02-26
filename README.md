@@ -52,9 +52,9 @@ Then import and create a microgrid network:
 from cybermicrogrid.networks import create_campus_microgrid_network
 
 net = create_campus_microgrid_network()
+```
 
-
-2. **Configure the Environment**
+### 2. **Configure the Environment**
 ```bash
 from torch_geometric.data import Data
 from cybermicrogrid.environment import PowerGridEnvironment
@@ -64,10 +64,10 @@ data = Data(num_nodes=net.bus.shape[0])
 data = ensure_features(data)
 
 env = PowerGridEnvironment(pp_net=net, data=data, attack_mode="DOS", attack_strength=0.1)
+```
+### 3. **Train an Agent**
 
-3. **Train an Agent**
-
-
+```
 from cybermicrogrid.agents import DQNAgent
 from cybermicrogrid.training import train_value_based_agent
 
@@ -75,18 +75,18 @@ agent = DQNAgent(state_dim=data.num_nodes, action_dim=len(net.line))
 env, rewards, freq, power, steps, times = train_value_based_agent(
     net, data, agent, num_episodes=10, attack_mode="DOS"
 )
-
+```
 **Contributing**
 CyberMicrogrid is a community-driven project. We welcome contributions that enhance the simulation environment, add new RL agents, or introduce additional cyberattack scenarios. If you’d like to get involved, please:
 
-Fork the repository on GitHub.
-Create a new branch for your feature or bug fix.
-Open a pull request with a clear description of your changes.
+**Fork** the repository on GitHub.
+**Create** a new branch for your feature or bug fix.
+**Open** a pull request with a clear description of your changes.
 
-**License**
+### **License**
 This project is licensed under the MIT License—see the LICENSE file for details.
 
-**Contact**
+### **Contact**
 For questions, feature requests, or collaboration inquiries, please open an issue on GitHub or reach out to the maintainers directly. We look forward to your feedback and contributions!
 
 By bridging cybersecurity research and power systems engineering, CyberMicrogrid offers a robust platform for simulating and defending modern grids against a spectrum of cyber threats—driving innovation in smart grid resiliency and control.
