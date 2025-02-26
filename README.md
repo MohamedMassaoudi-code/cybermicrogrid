@@ -93,9 +93,14 @@ This project is licensed under the MIT License—see the LICENSE file for detail
 ### **Contact**
 For questions, feature requests, or collaboration inquiries, please open an issue on GitHub or reach out to the maintainers directly. We look forward to your feedback and contributions!
 
-By bridging cybersecurity research and power systems engineering, CyberMicrogrid offers a robust platform for simulating and defending modern grids against a spectrum of cyber threats—driving innovation in smart grid resiliency and control.
+## . Citation
+Use this bibtex to cite this repository:
 
-vbnet
-Copy
-
-You can paste this text into your `README.md` file on GitHub to provide an attractive, well-forma
+@ARTICLE{
+  author={Massaoudi. {Mohamed}, et al.},
+  journal={IEEE Transactions on Industrial Cyber-Physical Systems}, 
+  title={A Transformer-based Graph Actor-Critic PPO Framework for Microgrid Cyber Security Via Combined Cyber-Physical Attack Graph Analysis}, 
+  year={2025},
+  volume={xx},
+  number={xx},
+  pages={1-12}}
