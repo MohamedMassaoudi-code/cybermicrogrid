@@ -41,7 +41,7 @@
 1. **Install & Import**  
    After cloning or downloading the library, install via:
    ```bash
-   pip install -e .
+   pip install -e 
 Then import and create a microgrid network:
 
 ```bash
