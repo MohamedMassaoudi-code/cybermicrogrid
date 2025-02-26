@@ -22,35 +22,35 @@
   The library’s modular design allows for easy **integration** with other data pipelines and **custom extensions**. Whether you’re prototyping new agents or adding novel attack vectors, CyberMicrogrid’s flexible architecture supports rapid experimentation.
 - **Available attacks** 
 
-| **Attack Mode**                   | **Brief Description**                                                                                                      |
-|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| **NONE**                          | Normal operation with no attack.                                                                                           |
-| **FDI**                           | False Data Injection: Alters bus voltage measurements to mislead the system.                                               |
-| **MITM**                          | Man-In-The-Middle: Intercepts and may modify data in transit without detection.                                            |
-| **DOS**                           | Denial of Service: Disables selected network lines, reducing connectivity.                                                 |
-| **REPLAY**                        | Replay Attack: Replays outdated (stale) data to disrupt system monitoring.                                                 |
-| **DDOS**                          | Distributed DoS: Simultaneously disables multiple lines to overwhelm the system.                                           |
-| **APT**                           | Advanced Persistent Threat: Gradually reduces distributed generation output.                                             |
-| **RANSOMWARE**                    | Ransomware Attack: Randomizes bus voltage levels to force corrective actions.                                              |
-| **PHISHING**                      | Phishing Attack: Introduces incorrect control actions by misleading operator inputs.                                       |
-| **ZERO_DAY**                      | Zero-Day Exploit: Randomly toggles line statuses and perturbs bus voltages unpredictably.                                  |
-| **INSIDER**                       | Insider Attack: Disables certain lines and subtly perturbs voltage to avoid detection.                                   |
-| **GPS_SPOOF**                     | GPS Spoofing: Applies a uniform voltage offset across all buses, simulating location spoofing.                             |
-| **SUPPLY_CHAIN**                  | Supply Chain Attack: Imposes persistent, systematic voltage offsets by tampering with supply chain data.                   |
-| **CONTROL_HIJACK**                | Control Hijack: Randomly toggles line statuses with increased frequency to seize network control.                        |
-| **CASCADING**                     | Cascading Failure: Triggers successive line outages leading to voltage instability.                                      |
-| **SENSOR_JAM**                    | Sensor Jam: Forces abnormal voltage readings by jamming sensor signals.                                                  |
-| **DATA_EXFIL**                    | Data Exfiltration: No direct physical effect; impacts system reward through penalty functions.                           |
-| **MALWARE**                       | Malware Attack: Randomly disrupts line status and reduces generation to degrade grid performance.                        |
-| **LOAD_ALTERING**                 | Load Altering: Introduces sinusoidal fluctuations to load demands, causing oscillations in grid performance.               |
-| **ENERGY_STORAGE_MANIPULATION**   | Energy Storage Manipulation: Reduces battery output by altering state-of-charge readings.                                  |
-| **DG_TAMPERING**                  | Distributed Generation Tampering: Introduces harmonic distortions in renewable generation outputs.                       |
-| **SYNCHRONIZATION**               | Synchronization Attack: Alters phase angles at buses to hinder proper reconnection with the main grid.                     |
-| **MARKET_MANIPULATION**           | Market Manipulation: Adjusts price signals in transactive energy systems to destabilize market operations.                 |
-| **FREQUENCY_CONTROL**             | Frequency Control Attack: Alters measured frequency to trigger inappropriate generator droop responses.                    |
-| **VOLTAGE_STABILITY**             | Voltage Stability Attack: Reduces reactive power injection from inverters, compromising voltage regulation.              |
-| **BLACK_START**                   | Black Start Compromise: Disables black start generators by setting their output to zero during restoration periods.        |
-| **COORDINATION**                  | Coordination Attack: Introduces delays in communication between distributed resources, disrupting coordinated control.   |
+| **No.** | **Attack Mode**                 | **Brief Description**                                                                                                      |
+|---------|---------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| 1       | **NONE**                        | Normal operation with no attack.                                                                                           |
+| 2       | **FDI**                         | False Data Injection: Alters bus voltage measurements to mislead the system.                                               |
+| 3       | **MITM**                        | Man-In-The-Middle: Intercepts and may modify data in transit without detection.                                            |
+| 4       | **DOS**                         | Denial of Service: Disables selected network lines, reducing connectivity.                                                 |
+| 5       | **REPLAY**                      | Replay Attack: Replays outdated (stale) data to disrupt system monitoring.                                                 |
+| 6       | **DDOS**                        | Distributed DoS: Simultaneously disables multiple lines to overwhelm the system.                                           |
+| 7       | **APT**                         | Advanced Persistent Threat: Gradually reduces distributed generation output.                                             |
+| 8       | **RANSOMWARE**                  | Ransomware Attack: Randomizes bus voltage levels to force corrective actions.                                              |
+| 9       | **PHISHING**                    | Phishing Attack: Introduces incorrect control actions by misleading operator inputs.                                       |
+| 10      | **ZERO_DAY**                    | Zero-Day Exploit: Randomly toggles line statuses and perturbs bus voltages unpredictably.                                  |
+| 11      | **INSIDER**                     | Insider Attack: Disables certain lines and subtly perturbs voltage to avoid detection.                                   |
+| 12      | **GPS_SPOOF**                   | GPS Spoofing: Applies a uniform voltage offset across all buses, simulating location spoofing.                             |
+| 13      | **SUPPLY_CHAIN**                | Supply Chain Attack: Imposes persistent, systematic voltage offsets by tampering with supply chain data.                   |
+| 14      | **CONTROL_HIJACK**              | Control Hijack: Randomly toggles line statuses with increased frequency to seize network control.                        |
+| 15      | **CASCADING**                   | Cascading Failure: Triggers successive line outages leading to voltage instability.                                      |
+| 16      | **SENSOR_JAM**                  | Sensor Jam: Forces abnormal voltage readings by jamming sensor signals.                                                  |
+| 17      | **DATA_EXFIL**                  | Data Exfiltration: No direct physical effect; impacts system reward through penalty functions.                           |
+| 18      | **MALWARE**                     | Malware Attack: Randomly disrupts line status and reduces generation to degrade grid performance.                        |
+| 19      | **LOAD_ALTERING**               | Load Altering: Introduces sinusoidal fluctuations to load demands, causing oscillations in grid performance.               |
+| 20      | **ENERGY_STORAGE_MANIPULATION** | Energy Storage Manipulation: Reduces battery output by altering state-of-charge readings.                                  |
+| 21      | **DG_TAMPERING**                | Distributed Generation Tampering: Introduces harmonic distortions in renewable generation outputs.                       |
+| 22      | **SYNCHRONIZATION**             | Synchronization Attack: Alters phase angles at buses to hinder proper reconnection with the main grid.                     |
+| 23      | **MARKET_MANIPULATION**         | Market Manipulation: Adjusts price signals in transactive energy systems to destabilize market operations.                 |
+| 24      | **FREQUENCY_CONTROL**           | Frequency Control Attack: Alters measured frequency to trigger inappropriate generator droop responses.                    |
+| 25      | **VOLTAGE_STABILITY**           | Voltage Stability Attack: Reduces reactive power injection from inverters, compromising voltage regulation.              |
+| 26      | **BLACK_START**                 | Black Start Compromise: Disables black start generators by setting their output to zero during restoration periods.        |
+| 27      | **COORDINATION**                | Coordination Attack: Introduces delays in communication between distributed resources, disrupting coordinated control.   |
 
 ---
 
