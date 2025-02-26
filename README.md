@@ -1,3 +1,5 @@
+#CyberMicrogrid
+
 CyberMicrogrid is an open-source Python library that seamlessly integrates power grid simulation with cybersecurity research, enabling researchers, engineers, and students to simulate, analyze, and defend cyber-physical microgrids. By offering a flexible environment for reinforcement learning (RL)-based control under a variety of realistic attack scenarios, CyberMicrogrid empowers users to develop and evaluate cutting-edge defense strategies for modern power systems.
 
 Key Highlights
