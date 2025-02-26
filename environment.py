@@ -18,7 +18,7 @@ class PowerGridEnvironment:
       NONE, FDI, MITM, DOS, REPLAY, DDOS, APT, RANSOMWARE, PHISHING, ZERO_DAY,
       INSIDER, GPS_SPOOF, SUPPLY_CHAIN, CONTROL_HIJACK, CASCADING, SENSOR_JAM,
       DATA_EXFIL, MALWARE,
-      ISLANDING, LOAD_ALTERING, ENERGY_STORAGE_MANIPULATION, DG_TAMPERING,
+      LOAD_ALTERING, ENERGY_STORAGE_MANIPULATION, DG_TAMPERING,
       SYNCHRONIZATION, MARKET_MANIPULATION, FREQUENCY_CONTROL, VOLTAGE_STABILITY,
       BLACK_START, COORDINATION
     """
@@ -197,13 +197,6 @@ class PowerGridEnvironment:
                 for idx in self.pp_net.sgen.index:
                     self.pp_net.sgen.at[idx, "p_mw"] *= (1 - self.attack_strength * np.random.uniform(0.5, 1.5))
             # New Attack Modes (19 - 28)
-            elif self.attack_mode == "ISLANDING":
-                # Simulate islanding by toggling the external grid (PCC) connection
-                if len(self.pp_net.ext_grid) > 0:
-                    idx = self.pp_net.ext_grid.index[0]
-                    current_status = self.pp_net.ext_grid.at[idx, "in_service"] if "in_service" in self.pp_net.ext_grid.columns else True
-                    self.pp_net.ext_grid.at[idx, "in_service"] = not current_status
-                    self.attacked_buses = [self.pp_net.ext_grid.at[idx, "bus"]]
             elif self.attack_mode == "LOAD_ALTERING":
                 # Alter load demands by adding a sinusoidal variation.
                 if len(self.pp_net.load) > 0:
