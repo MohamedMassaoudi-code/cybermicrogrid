@@ -104,3 +104,5 @@ Use this bibtex to cite this repository:
   volume={xx},
   number={xx},
   pages={1-12}}
+
+© Copyright 2025-2026 by Resilient Energy Systems Lab (RESLab), Texas A&M Engineering Experiment Station (TEES), and Texas A&M University.
