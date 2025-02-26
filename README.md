@@ -1,40 +1,47 @@
-#CyberMicrogrid
+# CyberMicrogrid
 
-CyberMicrogrid is an open-source Python library that seamlessly integrates power grid simulation with cybersecurity research, enabling researchers, engineers, and students to simulate, analyze, and defend cyber-physical microgrids. By offering a flexible environment for reinforcement learning (RL)-based control under a variety of realistic attack scenarios, CyberMicrogrid empowers users to develop and evaluate cutting-edge defense strategies for modern power systems.
+**CyberMicrogrid** is an open-source Python library that seamlessly integrates **power grid simulation** with **cybersecurity research**, enabling researchers, engineers, and students to **simulate**, **analyze**, and **defend** cyber-physical microgrids. By offering a flexible environment for **reinforcement learning (RL)**-based control under a variety of realistic attack scenarios, CyberMicrogrid empowers users to **develop** and **evaluate** cutting-edge defense strategies for modern power systems.
 
-Key Highlights
-Realistic Microgrid Environment
-The core of CyberMicrogrid is the PowerGridEnvironment, which accurately models a campus microgrid with buses, transformers, lines, loads, and distributed generators. It supports a diverse range of cyberattack modes—including FDI, MITM, DOS, DDOS, and many more—each configurable by attack strength.
+---
 
-Diverse Reinforcement Learning Agents
-Experiment with built-in RL agents spanning value-based (DQN, DoubleDQN, DuelingDQN) and policy gradient (REINFORCE, UltraFastPPO) methods. These agents serve as a foundation for customizing and extending RL-based defense strategies in complex microgrid environments.
+## Key Highlights
 
-Comprehensive Training & Analysis
-Streamlined training routines let you quickly run simulations, track performance metrics (e.g., power loss, frequency deviation, feasibility rate), and iterate over different cyberattack scenarios. An integrated analysis module simplifies the process of quantifying and comparing system vulnerabilities.
+- **Realistic Microgrid Environment**  
+  The core of CyberMicrogrid is the `PowerGridEnvironment`, which accurately models a campus microgrid with **buses**, **transformers**, **lines**, **loads**, and **distributed generators**. It supports a diverse range of **cyberattack modes**—including FDI, MITM, DOS, DDOS, and many more—each configurable by attack strength.
 
-Educational & Research Tool
-Ideal for university courses, lab experiments, and corporate R&D, CyberMicrogrid provides a hands-on approach to understanding how cyber threats can disrupt critical infrastructure—and how reinforcement learning can mitigate these threats.
+- **Diverse Reinforcement Learning Agents**  
+  Experiment with built-in RL agents spanning **value-based** (DQN, DoubleDQN, DuelingDQN) and **policy gradient** (REINFORCE, UltraFastPPO) methods. These agents serve as a foundation for customizing and extending RL-based defense strategies in complex microgrid environments.
 
-Modular & Extensible
-The library’s modular design allows for easy integration with other data pipelines and custom extensions. Whether you’re prototyping new agents or adding novel attack vectors, CyberMicrogrid’s flexible architecture supports rapid experimentation.
+- **Comprehensive Training & Analysis**  
+  Streamlined **training routines** let you quickly run simulations, track performance metrics (e.g., **power loss**, **frequency deviation**, **feasibility rate**), and iterate over different cyberattack scenarios. An integrated **analysis module** simplifies the process of quantifying and comparing system vulnerabilities.
 
-Example Use Cases
-Cybersecurity Research
-Investigate the impact of sophisticated cyberattacks on microgrid operations and devise robust RL-based defense strategies.
+- **Educational & Research Tool**  
+  Ideal for **university courses**, **lab experiments**, and **corporate R&D**, CyberMicrogrid provides a hands-on approach to understanding how cyber threats can disrupt critical infrastructure—and how **reinforcement learning** can mitigate these threats.
 
-Grid Reliability Studies
-Examine how disruptions—like sensor spoofing or denial-of-service attacks—affect frequency stability and power flows in real-time.
+- **Modular & Extensible**  
+  The library’s modular design allows for easy **integration** with other data pipelines and **custom extensions**. Whether you’re prototyping new agents or adding novel attack vectors, CyberMicrogrid’s flexible architecture supports rapid experimentation.
 
-Teaching & Training
-Use CyberMicrogrid as a hands-on educational platform to teach the fundamentals of cyber-physical systems, smart grids, and reinforcement learning.
+---
 
-Getting Started
-Install & Import
-After cloning or downloading the library, install via:
+## Example Use Cases
 
-bash
-Copy
-pip install -e .
+1. **Cybersecurity Research**  
+   Investigate the impact of sophisticated cyberattacks on microgrid operations and devise robust RL-based defense strategies.
+
+2. **Grid Reliability Studies**  
+   Examine how disruptions—like sensor spoofing or denial-of-service attacks—affect frequency stability and power flows in real-time.
+
+3. **Teaching & Training**  
+   Use CyberMicrogrid as a hands-on educational platform to teach the fundamentals of **cyber-physical systems**, **smart grids**, and **reinforcement learning**.
+
+---
+
+## Getting Started
+
+1. **Install & Import**  
+   After cloning or downloading the library, install via:
+   ```bash
+   pip install -e .
 Then import and create a microgrid network:
 
 python
@@ -77,3 +84,8 @@ Contact
 For questions, feature requests, or collaboration inquiries, please open an issue on GitHub or reach out to the maintainers directly. We look forward to your feedback and contributions!
 
 By bridging cybersecurity research and power systems engineering, CyberMicrogrid offers a robust platform for simulating and defending modern grids against a spectrum of cyber threats—driving innovation in smart grid resiliency and control.
+
+vbnet
+Copy
+
+You can paste this text into your `README.md` file on GitHub to provide an attractive, well-forma
