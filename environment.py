@@ -69,7 +69,6 @@ class PowerGridEnvironment:
         curr_status = self.pp_net.line.at[line_idx, "in_service"]
         self.pp_net.line.at[line_idx, "in_service"] = not curr_status
 
-        # Existing attack modes (1-18)
         if self.attack_mode in ["DOS", "DDOS"]:
             self.dos_lines = []
             prob = self.attack_strength if self.attack_mode == "DOS" else self.attack_strength * 1.5
@@ -77,6 +76,7 @@ class PowerGridEnvironment:
                 if np.random.rand() < prob:
                     self.pp_net.line.at[i, "in_service"] = False
                     self.dos_lines.append(i)
+
         self._update_graph()
         self._run_power_flow()
 
@@ -198,11 +198,12 @@ class PowerGridEnvironment:
                     self.pp_net.sgen.at[idx, "p_mw"] *= (1 - self.attack_strength * np.random.uniform(0.5, 1.5))
             # New Attack Modes (19 - 28)
             elif self.attack_mode == "ISLANDING":
-                # Simulate islanding by toggling the connection at the Point of Common Coupling (PCC)
-                # Assume PCC is represented by bus index 0.
-                self.attacked_buses = [0]
-                current_status = self.pp_net.bus.at[0, "in_service"] if "in_service" in self.pp_net.bus.columns else True
-                self.pp_net.bus.at[0, "in_service"] = not current_status
+                # Simulate islanding by toggling the external grid (PCC) connection
+                if len(self.pp_net.ext_grid) > 0:
+                    idx = self.pp_net.ext_grid.index[0]
+                    current_status = self.pp_net.ext_grid.at[idx, "in_service"] if "in_service" in self.pp_net.ext_grid.columns else True
+                    self.pp_net.ext_grid.at[idx, "in_service"] = not current_status
+                    self.attacked_buses = [self.pp_net.ext_grid.at[idx, "bus"]]
             elif self.attack_mode == "LOAD_ALTERING":
                 # Alter load demands by adding a sinusoidal variation.
                 if len(self.pp_net.load) > 0:
@@ -231,13 +232,11 @@ class PowerGridEnvironment:
                                             replace=False)
                 for b in attacked:
                     epsilon = self.attack_strength * random.uniform(0.1, 0.5)
-                    # Assume a phase angle attribute "theta" exists; if not, initialize it to 0.0
                     theta = self.pp_net.bus.at[b, "theta"] if "theta" in self.pp_net.bus.columns else 0.0
                     self.pp_net.bus.at[b, "theta"] = theta + epsilon
                     self.attacked_buses.append(b)
             elif self.attack_mode == "MARKET_MANIPULATION":
                 # Manipulate price signals in transactive energy systems
-                # This is a placeholder: assume a custom attribute 'price' in the network
                 if hasattr(self.pp_net, "price"):
                     original_price = self.pp_net.price.get("Price_actual", 1.0)
                     manipulated_price = original_price * (1 + self.attack_strength * random.choice([-1, 1]))
@@ -249,7 +248,6 @@ class PowerGridEnvironment:
                                             replace=False)
                 for b in attacked:
                     delta_f = self.attack_strength * random.uniform(0.1, 0.5)
-                    # Here we mimic frequency measurement by altering a fictitious 'f_measured' field in res_bus.
                     self.pp_net.res_bus.at[b, "f_measured"] = 50 + delta_f
                     self.attacked_buses.append(b)
             elif self.attack_mode == "VOLTAGE_STABILITY":
@@ -272,7 +270,6 @@ class PowerGridEnvironment:
                 delay = self.attack_strength * random.uniform(0.5, 2.0)
                 time.sleep(delay)
             else:
-                # For attack modes that are not implemented or "NONE"
                 pass
 
         reward = self._calc_reward()
