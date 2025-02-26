@@ -44,9 +44,15 @@
    pip install -e 
 Then import and create a microgrid network:
 
-```bash
+## Usage Example
+
+### 1. Import and Create a Microgrid Network
+
+```python
 from cybermicrogrid.networks import create_campus_microgrid_network
-net = create_campus_microgrid_network().
+
+net = create_campus_microgrid_network()
+
 
 2. **Configure the Environment**
 ```bash
