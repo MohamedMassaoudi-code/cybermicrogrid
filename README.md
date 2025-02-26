@@ -98,15 +98,9 @@ Use this bibtex to cite this repository:
 
 @ARTICLE{
   author={Massaoudi. {Mohamed}, et al.},
-  
   journal={IEEE Transactions on Industrial Cyber-Physical Systems}, 
-  
   title={A Transformer-based Graph Actor-Critic PPO Framework for Microgrid Cyber Security Via Combined Cyber-Physical Attack Graph Analysis}, 
-  
   year={2025},
-  
   volume={xx},
-  
   number={xx},
-  
   pages={1-12}}
