@@ -60,8 +60,6 @@ data = ensure_features(data)
 env = PowerGridEnvironment(pp_net=net, data=data, attack_mode="DOS", attack_strength=0.1)
 Train an Agent
 
-python
-Copy
 from cybermicrogrid.agents import DQNAgent
 from cybermicrogrid.training import train_value_based_agent
 
