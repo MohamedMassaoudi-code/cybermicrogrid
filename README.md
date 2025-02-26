@@ -124,7 +124,7 @@ This project is licensed under the MIT License—see the LICENSE file for detail
 ### **Contact**
 For questions, feature requests, or collaboration inquiries, please open an issue on GitHub or reach out to the maintainers directly. We look forward to your feedback and contributions!
 
-## . Citation
+##  Citation
 Use this bibtex to cite this repository:
 
 @ARTICLE{
