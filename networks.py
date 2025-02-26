@@ -52,3 +52,12 @@ def create_campus_microgrid_network():
     pp.create_sgen(net, bus=bus_microgrid_exp, p_mw=0.2, q_mvar=0.0, name="Microgrid PV 1")
     pp.create_sgen(net, bus=bus_microgrid_exp, p_mw=0.2, q_mvar=0.0, name="Microgrid PV 2")
     return net
+
+def create_ieee30_network():
+    return pn.case_ieee30()
+
+def create_ieee33bw_network():
+    return pn.case33bw()
+
+def create_cigre_mv_network():
+    return pn.create_cigre_network_mv(with_der="all")
