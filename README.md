@@ -1,36 +1,77 @@
-# cybermicrogrid
+CyberMicrogrid is an open-source Python library that seamlessly integrates power grid simulation with cybersecurity research, enabling researchers, engineers, and students to simulate, analyze, and defend cyber-physical microgrids. By offering a flexible environment for reinforcement learning (RL)-based control under a variety of realistic attack scenarios, CyberMicrogrid empowers users to develop and evaluate cutting-edge defense strategies for modern power systems.
 
-CyberMicrogrid is a comprehensive Python library designed for researchers and engineers to simulate and defend cyber-physical microgrids using state-of-the-art reinforcement learning techniques. The library provides a modular framework that integrates power grid simulation with a wide range of cyberattack scenarios, enabling users to experiment with and develop advanced grid defense strategies.
+Key Highlights
+Realistic Microgrid Environment
+The core of CyberMicrogrid is the PowerGridEnvironment, which accurately models a campus microgrid with buses, transformers, lines, loads, and distributed generators. It supports a diverse range of cyberattack modes—including FDI, MITM, DOS, DDOS, and many more—each configurable by attack strength.
 
-Key Features
-Flexible Environment Simulation:
-The core of the library is the PowerGridEnvironment, which models a campus microgrid network and supports a diverse set of cyberattack scenarios including FDI, MITM, DOS, DDOS, and many others. Users can configure the environment with different attack modes and strengths, making it ideal for both academic research and practical applications.
+Diverse Reinforcement Learning Agents
+Experiment with built-in RL agents spanning value-based (DQN, DoubleDQN, DuelingDQN) and policy gradient (REINFORCE, UltraFastPPO) methods. These agents serve as a foundation for customizing and extending RL-based defense strategies in complex microgrid environments.
 
-Agent Implementations:
-CyberMicrogrid offers a variety of agent classes for both value-based and policy gradient reinforcement learning methods. Examples include DummyAgent, DQNAgent, DoubleDQNAgent, DuelingDQNAgent, PolicyGradientAgent, and an ultra-fast PPO-based agent. These agents provide a starting point for developing custom strategies for grid defense.
+Comprehensive Training & Analysis
+Streamlined training routines let you quickly run simulations, track performance metrics (e.g., power loss, frequency deviation, feasibility rate), and iterate over different cyberattack scenarios. An integrated analysis module simplifies the process of quantifying and comparing system vulnerabilities.
 
-Network Construction:
-The library includes utilities to construct realistic microgrid networks. For instance, the create_campus_microgrid_network function builds a detailed microgrid model with buses, transformers, lines, loads, and distributed generators, serving as a realistic testbed for cyberattack simulations.
+Educational & Research Tool
+Ideal for university courses, lab experiments, and corporate R&D, CyberMicrogrid provides a hands-on approach to understanding how cyber threats can disrupt critical infrastructure—and how reinforcement learning can mitigate these threats.
 
-Comprehensive Training Routines:
-Training functions for different reinforcement learning paradigms are provided to streamline the process of running simulations, evaluating agent performance, and iterating over different cyberattack scenarios. These routines also log key performance metrics like power loss, frequency deviation, and feasibility rates.
+Modular & Extensible
+The library’s modular design allows for easy integration with other data pipelines and custom extensions. Whether you’re prototyping new agents or adding novel attack vectors, CyberMicrogrid’s flexible architecture supports rapid experimentation.
 
-Utility and Analysis Tools:
-A set of utility functions is included to ensure proper data preparation, such as creating valid PyTorch Geometric data objects. In addition, the library offers an analysis module to compute system performance metrics and assess the impact of various attack scenarios.
+Example Use Cases
+Cybersecurity Research
+Investigate the impact of sophisticated cyberattacks on microgrid operations and devise robust RL-based defense strategies.
 
-Use Cases
-Cybersecurity Research:
-Evaluate the resilience of microgrid systems against various cyber threats by simulating realistic attack scenarios.
+Grid Reliability Studies
+Examine how disruptions—like sensor spoofing or denial-of-service attacks—affect frequency stability and power flows in real-time.
 
-Reinforcement Learning Development:
-Train and test RL-based defense strategies tailored to mitigate the impacts of cyberattacks on power grids.
-
-Educational Tool:
-Serve as an educational platform for teaching the principles of cyber-physical systems security and advanced control strategies in energy systems.
+Teaching & Training
+Use CyberMicrogrid as a hands-on educational platform to teach the fundamentals of cyber-physical systems, smart grids, and reinforcement learning.
 
 Getting Started
-Users can install CyberMicrogrid via pip (after publishing to PyPI) or directly from the GitHub repository. The library is well-documented and includes a comprehensive README, detailed API references, and usage examples to help users quickly integrate it into their projects.
+Install & Import
+After cloning or downloading the library, install via:
 
-CyberMicrogrid is open for contributions, making it an evolving project driven by community input and collaboration.
+bash
+Copy
+pip install -e .
+Then import and create a microgrid network:
 
-This project aims to bridge the gap between cyber-security research and power systems engineering by providing an accessible and robust simulation platform for cyber-physical microgrids.
+python
+Copy
+from cybermicrogrid.networks import create_campus_microgrid_network
+net = create_campus_microgrid_network()
+Configure the Environment
+
+python
+Copy
+from torch_geometric.data import Data
+from cybermicrogrid.environment import PowerGridEnvironment
+from cybermicrogrid.utils import ensure_features
+
+data = Data(num_nodes=net.bus.shape[0])
+data = ensure_features(data)
+
+env = PowerGridEnvironment(pp_net=net, data=data, attack_mode="DOS", attack_strength=0.1)
+Train an Agent
+
+python
+Copy
+from cybermicrogrid.agents import DQNAgent
+from cybermicrogrid.training import train_value_based_agent
+
+agent = DQNAgent(state_dim=data.num_nodes, action_dim=len(net.line))
+env, rewards, freq, power, steps, times = train_value_based_agent(
+    net, data, agent, num_episodes=10, attack_mode="DOS"
+)
+Contributing
+CyberMicrogrid is a community-driven project. We welcome contributions that enhance the simulation environment, add new RL agents, or introduce additional cyberattack scenarios. If you’d like to get involved, please:
+
+Fork the repository on GitHub.
+Create a new branch for your feature or bug fix.
+Open a pull request with a clear description of your changes.
+License
+This project is licensed under the MIT License—see the LICENSE file for details.
+
+Contact
+For questions, feature requests, or collaboration inquiries, please open an issue on GitHub or reach out to the maintainers directly. We look forward to your feedback and contributions!
+
+By bridging cybersecurity research and power systems engineering, CyberMicrogrid offers a robust platform for simulating and defending modern grids against a spectrum of cyber threats—driving innovation in smart grid resiliency and control.
