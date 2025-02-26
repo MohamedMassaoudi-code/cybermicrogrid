@@ -41,7 +41,10 @@
 1. **Install & Import**  
    After cloning or downloading the library, install via:
    ```bash
-   pip install -e 
+   !git clone https://github.com/MohamedMassaoudi-code/cybermicrogrid.git
+    %cd cybermicrogrid
+    !pip install -e .
+
 Then import and create a microgrid network:
 
 ## Usage Example
