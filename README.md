@@ -46,7 +46,7 @@ Then import and create a microgrid network:
 
 ```bash
 from cybermicrogrid.networks import create_campus_microgrid_network
-net = create_campus_microgrid_network()
+net = create_campus_microgrid_network().
 Configure the Environment
 
 ```bash
