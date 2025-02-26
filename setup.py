@@ -18,7 +18,6 @@ setup(
         'scikit-learn',
         'pandapower',
         'torch-geometric',  # Ensure compatibility and correct package name
-        'pydnp3',          # New dependency for DNP3 communications
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
