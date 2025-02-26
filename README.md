@@ -44,14 +44,12 @@
    pip install -e .
 Then import and create a microgrid network:
 
-python
-Copy
+```bash
 from cybermicrogrid.networks import create_campus_microgrid_network
 net = create_campus_microgrid_network()
 Configure the Environment
 
-python
-Copy
+```bash
 from torch_geometric.data import Data
 from cybermicrogrid.environment import PowerGridEnvironment
 from cybermicrogrid.utils import ensure_features
